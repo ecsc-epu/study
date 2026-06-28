@@ -62,9 +62,7 @@
       "color": "#4ea8de",
       "status": "available",
       "courseFile": "courses/blueteam.json",
-      "prerequisites": [
-        "beginner"
-      ]
+      "prerequisites": ["beginner"]
     },
     {
       "id": "redteam",
@@ -76,9 +74,7 @@
       "color": "#be3d2a",
       "status": "available",
       "courseFile": "courses/redteam.json",
-      "prerequisites": [
-        "beginner"
-      ]
+      "prerequisites": ["beginner"]
     }
   ],
   "edges": [

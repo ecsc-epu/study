@@ -7,9 +7,9 @@ function getUrlParams() {
   const params = {};
   const search = window.location.search.substring(1);
   if (!search) return params;
-  search.split('&').forEach(pair => {
-    const [key, val] = pair.split('=');
-    params[decodeURIComponent(key)] = decodeURIComponent(val || '');
+  search.split("&").forEach((pair) => {
+    const [key, val] = pair.split("=");
+    params[decodeURIComponent(key)] = decodeURIComponent(val || "");
   });
   return params;
 }
@@ -18,7 +18,7 @@ function getUrlParams() {
 function buildUrl(base, params) {
   const query = Object.entries(params)
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&');
+    .join("&");
   return query ? `${base}?${query}` : base;
 }
 
@@ -28,12 +28,14 @@ function loadDataJS(url, globalVarName) {
     if (window[globalVarName]) {
       return resolve(window[globalVarName]);
     }
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     script.src = url;
     script.onload = () => resolve(window[globalVarName]);
     script.onerror = () => {
       console.error(`[loadDataJS] Failed to load ${url}`);
-      alert(`Lỗi tải dữ liệu từ ${url}. Hãy chắc chắn bạn đã chạy file qua HTTP server hoặc các file JS tồn tại.`);
+      alert(
+        `Lỗi tải dữ liệu từ ${url}. Hãy chắc chắn bạn đã chạy file qua HTTP server hoặc các file JS tồn tại.`,
+      );
       reject(new Error(`Failed to load ${url}`));
     };
     document.head.appendChild(script);
@@ -44,15 +46,17 @@ function loadDataJS(url, globalVarName) {
 function createElement(tag, attrs = {}, children = []) {
   const el = document.createElement(tag);
   Object.entries(attrs).forEach(([key, val]) => {
-    if (key === 'className') el.className = val;
-    else if (key === 'textContent') el.textContent = val;
-    else if (key === 'innerHTML') el.innerHTML = val;
-    else if (key.startsWith('on')) el.addEventListener(key.slice(2).toLowerCase(), val);
-    else if (key.startsWith('data-')) el.setAttribute(key, val);
+    if (key === "className") el.className = val;
+    else if (key === "textContent") el.textContent = val;
+    else if (key === "innerHTML") el.innerHTML = val;
+    else if (key.startsWith("on"))
+      el.addEventListener(key.slice(2).toLowerCase(), val);
+    else if (key.startsWith("data-")) el.setAttribute(key, val);
     else el.setAttribute(key, val);
   });
-  children.forEach(child => {
-    if (typeof child === 'string') el.appendChild(document.createTextNode(child));
+  children.forEach((child) => {
+    if (typeof child === "string")
+      el.appendChild(document.createTextNode(child));
     else if (child) el.appendChild(child);
   });
   return el;

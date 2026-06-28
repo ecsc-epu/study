@@ -7,7 +7,7 @@
 class ParticleSystem {
   constructor(canvasEl) {
     this.canvas = canvasEl;
-    this.ctx = canvasEl.getContext('2d');
+    this.ctx = canvasEl.getContext("2d");
     this.width = 0;
     this.height = 0;
     this.particles = [];
@@ -17,15 +17,15 @@ class ParticleSystem {
 
   init() {
     this._resize();
-    window.addEventListener('resize', () => this._resize());
+    window.addEventListener("resize", () => this._resize());
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
       const rect = this.canvas.getBoundingClientRect();
       this.mouse.x = e.clientX - rect.left;
       this.mouse.y = e.clientY - rect.top;
     });
 
-    document.addEventListener('mouseout', () => {
+    document.addEventListener("mouseout", () => {
       this.mouse.x = null;
       this.mouse.y = null;
     });
@@ -114,7 +114,7 @@ class Particle {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(245, 196, 94, 0.35)';
+    ctx.fillStyle = "rgba(245, 196, 94, 0.35)";
     ctx.fill();
   }
 }

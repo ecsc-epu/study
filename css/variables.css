@@ -38,8 +38,8 @@
   --accent-purple-dim: rgba(157, 78, 221, 0.3);
 
   /* ── Typography ── */
-  --font-heading: 'Silkscreen', cursive;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-heading: "Silkscreen", cursive;
+  --font-mono: "JetBrains Mono", monospace;
 
   /* ── Spacing ── */
   --space-xs: 4px;

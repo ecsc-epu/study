@@ -6,9 +6,9 @@
 class CanvasEngine {
   constructor(container) {
     this.container = container;
-    this.canvas = container.querySelector('#infinite-canvas');
-    this.dotGrid = container.querySelector('#dotGrid');
-    this.majorGrid = container.querySelector('#majorGrid');
+    this.canvas = container.querySelector("#infinite-canvas");
+    this.dotGrid = container.querySelector("#dotGrid");
+    this.majorGrid = container.querySelector("#majorGrid");
 
     // State
     this.panX = 0;
@@ -46,7 +46,7 @@ class CanvasEngine {
   get screenCenter() {
     return {
       x: this.container.clientWidth / 2,
-      y: this.container.clientHeight / 2
+      y: this.container.clientHeight / 2,
     };
   }
 
@@ -55,7 +55,7 @@ class CanvasEngine {
     const c = this.screenCenter;
     return {
       x: c.x + (wx + this.panX) * this.zoom,
-      y: c.y + (wy + this.panY) * this.zoom
+      y: c.y + (wy + this.panY) * this.zoom,
     };
   }
 
@@ -64,7 +64,7 @@ class CanvasEngine {
     const c = this.screenCenter;
     return {
       x: (sx - c.x) / this.zoom - this.panX,
-      y: (sy - c.y) / this.zoom - this.panY
+      y: (sy - c.y) / this.zoom - this.panY,
     };
   }
 
@@ -104,8 +104,8 @@ class CanvasEngine {
     const majorSize = 200 * this.zoom;
     const c = this.screenCenter;
 
-    const offsetX = (this.panX * this.zoom + c.x);
-    const offsetY = (this.panY * this.zoom + c.y);
+    const offsetX = this.panX * this.zoom + c.x;
+    const offsetY = this.panY * this.zoom + c.y;
 
     const dotOffX = ((offsetX % dotSize) + dotSize) % dotSize;
     const dotOffY = ((offsetY % dotSize) + dotSize) % dotSize;
@@ -153,19 +153,19 @@ class CanvasEngine {
     const el = this.container;
 
     // Mouse drag
-    el.addEventListener('mousedown', (e) => {
+    el.addEventListener("mousedown", (e) => {
       if (e.button !== 0) return;
       // Don't start drag if clicking a node
-      if (e.target.closest('.flow-node')) return;
+      if (e.target.closest(".flow-node")) return;
       this._isDragging = true;
       this._dragStartX = e.clientX;
       this._dragStartY = e.clientY;
       this._panStartX = this.panX;
       this._panStartY = this.panY;
-      el.classList.add('grabbing');
+      el.classList.add("grabbing");
     });
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
       if (!this._isDragging) return;
       const dx = e.clientX - this._dragStartX;
       const dy = e.clientY - this._dragStartY;
@@ -175,96 +175,129 @@ class CanvasEngine {
       this.update();
     });
 
-    document.addEventListener('mouseup', () => {
+    document.addEventListener("mouseup", () => {
       this._isDragging = false;
-      el.classList.remove('grabbing');
+      el.classList.remove("grabbing");
     });
 
     // Wheel event (pan by default, zoom with ctrl/meta)
-    el.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (e.ctrlKey || e.metaKey) {
-        // Zoom
-        const delta = -e.deltaY * 0.005;
-        const newZoom = this.zoom * (1 + delta);
-        this.zoomAt(e.clientX, e.clientY, newZoom);
-      } else {
-        // Pan
-        this.panX -= e.deltaX / this.zoom;
-        this.panY -= e.deltaY / this.zoom;
-        this._clampPan();
-        this.update();
-      }
-    }, { passive: false });
+    el.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+        if (e.ctrlKey || e.metaKey) {
+          // Zoom
+          const delta = -e.deltaY * 0.005;
+          const newZoom = this.zoom * (1 + delta);
+          this.zoomAt(e.clientX, e.clientY, newZoom);
+        } else {
+          // Pan
+          this.panX -= e.deltaX / this.zoom;
+          this.panY -= e.deltaY / this.zoom;
+          this._clampPan();
+          this.update();
+        }
+      },
+      { passive: false },
+    );
 
     // Touch
-    el.addEventListener('touchstart', (e) => {
-      if (e.target.closest('.flow-node')) return;
-      if (e.touches.length === 1) {
-        this._isTouching = true;
-        this._dragStartX = e.touches[0].clientX;
-        this._dragStartY = e.touches[0].clientY;
-        this._panStartX = this.panX;
-        this._panStartY = this.panY;
-      } else if (e.touches.length === 2) {
-        const dx = e.touches[1].clientX - e.touches[0].clientX;
-        const dy = e.touches[1].clientY - e.touches[0].clientY;
-        this._lastTouchDist = Math.hypot(dx, dy);
-      }
-      e.preventDefault();
-    }, { passive: false });
-
-    el.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 1 && this._isTouching) {
-        const dx = e.touches[0].clientX - this._dragStartX;
-        const dy = e.touches[0].clientY - this._dragStartY;
-        this.panX = this._panStartX + dx / this.zoom;
-        this.panY = this._panStartY + dy / this.zoom;
-        this._clampPan();
-        this.update();
-      } else if (e.touches.length === 2) {
-        const dx = e.touches[1].clientX - e.touches[0].clientX;
-        const dy = e.touches[1].clientY - e.touches[0].clientY;
-        const dist = Math.hypot(dx, dy);
-        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-        if (this._lastTouchDist > 0) {
-          this.zoomAt(midX, midY, this.zoom * (dist / this._lastTouchDist));
+    el.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.target.closest(".flow-node")) return;
+        if (e.touches.length === 1) {
+          this._isTouching = true;
+          this._dragStartX = e.touches[0].clientX;
+          this._dragStartY = e.touches[0].clientY;
+          this._panStartX = this.panX;
+          this._panStartY = this.panY;
+        } else if (e.touches.length === 2) {
+          const dx = e.touches[1].clientX - e.touches[0].clientX;
+          const dy = e.touches[1].clientY - e.touches[0].clientY;
+          this._lastTouchDist = Math.hypot(dx, dy);
         }
-        this._lastTouchDist = dist;
-      }
-      e.preventDefault();
-    }, { passive: false });
+        e.preventDefault();
+      },
+      { passive: false },
+    );
 
-    el.addEventListener('touchend', (e) => {
+    el.addEventListener(
+      "touchmove",
+      (e) => {
+        if (e.touches.length === 1 && this._isTouching) {
+          const dx = e.touches[0].clientX - this._dragStartX;
+          const dy = e.touches[0].clientY - this._dragStartY;
+          this.panX = this._panStartX + dx / this.zoom;
+          this.panY = this._panStartY + dy / this.zoom;
+          this._clampPan();
+          this.update();
+        } else if (e.touches.length === 2) {
+          const dx = e.touches[1].clientX - e.touches[0].clientX;
+          const dy = e.touches[1].clientY - e.touches[0].clientY;
+          const dist = Math.hypot(dx, dy);
+          const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+          const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          if (this._lastTouchDist > 0) {
+            this.zoomAt(midX, midY, this.zoom * (dist / this._lastTouchDist));
+          }
+          this._lastTouchDist = dist;
+        }
+        e.preventDefault();
+      },
+      { passive: false },
+    );
+
+    el.addEventListener("touchend", (e) => {
       if (e.touches.length < 2) this._lastTouchDist = 0;
       if (e.touches.length === 0) this._isTouching = false;
     });
 
     // Keyboard
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener("keydown", (e) => {
       const step = 60 / this.zoom;
       switch (e.key) {
-        case 'ArrowUp': this.panY += step; break;
-        case 'ArrowDown': this.panY -= step; break;
-        case 'ArrowLeft': this.panX += step; break;
-        case 'ArrowRight': this.panX -= step; break;
-        case '+': case '=':
-          this.zoomAt(this.screenCenter.x, this.screenCenter.y, this.zoom * 1.15);
+        case "ArrowUp":
+          this.panY += step;
+          break;
+        case "ArrowDown":
+          this.panY -= step;
+          break;
+        case "ArrowLeft":
+          this.panX += step;
+          break;
+        case "ArrowRight":
+          this.panX -= step;
+          break;
+        case "+":
+        case "=":
+          this.zoomAt(
+            this.screenCenter.x,
+            this.screenCenter.y,
+            this.zoom * 1.15,
+          );
           return;
-        case '-':
-          this.zoomAt(this.screenCenter.x, this.screenCenter.y, this.zoom / 1.15);
+        case "-":
+          this.zoomAt(
+            this.screenCenter.x,
+            this.screenCenter.y,
+            this.zoom / 1.15,
+          );
           return;
-        case '0':
+        case "0":
           this.reset();
           return;
-        default: return;
+        default:
+          return;
       }
       this._clampPan();
       this.update();
     });
 
     // Resize
-    window.addEventListener('resize', debounce(() => this.update(), 100));
+    window.addEventListener(
+      "resize",
+      debounce(() => this.update(), 100),
+    );
   }
 }
