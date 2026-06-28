@@ -1,0 +1,94 @@
+{
+  "title": "ECSC Learning Roadmap",
+  "titleY": -310,
+  "bounds": {
+    "minX": -1500,
+    "minY": -1500,
+    "maxX": 1500,
+    "maxY": 1500
+  },
+  "decors": [
+    {
+      "src": "assets/decors/wrench.svg",
+      "x": -650,
+      "y": 400,
+      "rotation": -30,
+      "height": "600px",
+      "opacity": 0.3
+    },
+    {
+      "src": "assets/decors/hammer.svg",
+      "x": 650,
+      "y": 400,
+      "rotation": 30,
+      "height": "600px",
+      "opacity": 0.3
+    },
+    {
+      "src": "assets/decors/screwdriver.svg",
+      "x": -700,
+      "y": -250,
+      "rotation": 45,
+      "height": "600px",
+      "opacity": 0.3
+    },
+    {
+      "src": "assets/decors/brush.svg",
+      "x": 700,
+      "y": -250,
+      "rotation": -45,
+      "height": "600px",
+      "opacity": 0.3
+    }
+  ],
+  "nodes": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "description": "Kiến thức nền tảng cho người mới bắt đầu",
+      "x": 0,
+      "y": -120,
+      "color": "#f5c45e",
+      "status": "available",
+      "courseFile": "courses/beginner.json"
+    },
+    {
+      "id": "blueteam",
+      "label": "Intro to Blue Team",
+      "faIcon": "fa-solid fa-shield-halved",
+      "description": "Phòng thủ, giám sát & ứng cứu sự cố",
+      "x": -280,
+      "y": 120,
+      "color": "#4ea8de",
+      "status": "available",
+      "courseFile": "courses/blueteam.json",
+      "prerequisites": [
+        "beginner"
+      ]
+    },
+    {
+      "id": "redteam",
+      "label": "Intro to Red Team",
+      "faIcon": "fa-solid fa-user-ninja",
+      "description": "Kiểm thử xâm nhập & khai thác lỗ hổng",
+      "x": 280,
+      "y": 120,
+      "color": "#be3d2a",
+      "status": "available",
+      "courseFile": "courses/redteam.json",
+      "prerequisites": [
+        "beginner"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "beginner",
+      "to": "blueteam"
+    },
+    {
+      "from": "beginner",
+      "to": "redteam"
+    }
+  ]
+}

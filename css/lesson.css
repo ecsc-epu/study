@@ -1,0 +1,199 @@
+/* ======================================
+   Lesson Page Styles
+   ====================================== */
+
+/* 
+ * Override components.css fixed-height layout to allow scrolling.
+ * components.css sets body/outer/inner to height:100vh/100%/100% + overflow:hidden
+ * which is correct for the canvas page but blocks scrolling here.
+ * We use !important + vh units to break free from the percentage chain.
+ */
+html {
+  height: auto !important;
+}
+
+body {
+  height: auto !important;
+  min-height: 100vh;
+  overflow: visible !important;
+  padding: var(--border-outer);
+}
+
+.outer-border {
+  height: auto !important;
+  min-height: calc(100vh - 2 * var(--border-outer));
+}
+
+.inner-border {
+  height: auto !important;
+  min-height: calc(100vh - 4 * var(--border-outer));
+  overflow: visible !important;
+}
+
+.lesson-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - 52px);
+}
+
+.lesson-content {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.lesson-header {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--border-red);
+}
+
+.lesson-header__icon { font-size: 36px; margin-bottom: var(--space-md); display: block; }
+
+.lesson-header__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--text-white);
+  letter-spacing: 0.05em;
+  text-shadow: 4px 4px 0px rgba(0,0,0,0.6);
+  margin-bottom: var(--space-sm);
+}
+
+.lesson-header__course {
+  font-size: 13px;
+  color: var(--border-yellow);
+  letter-spacing: 0.05em;
+}
+
+/* Body */
+.lesson-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #f0f0f0;
+  margin-bottom: var(--space-xl);
+}
+
+.lesson-body p { margin-bottom: var(--space-md); }
+
+.lesson-body h2 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--border-yellow);
+  margin: var(--space-lg) 0 var(--space-md);
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+}
+
+.lesson-body code {
+  background: rgba(0,0,0,0.4);
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--border-yellow);
+  border: 1px solid var(--border-yellow-dim);
+}
+
+.lesson-body pre {
+  background: rgba(0,0,0,0.5);
+  border: 2px solid var(--border-red-dim);
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin: var(--space-md) 0;
+  box-shadow: var(--shadow-pixel);
+}
+
+.lesson-body pre code { background: none; border: none; padding: 0; color: var(--text-white); }
+
+.lesson-body li::marker { color: var(--border-yellow); }
+
+/* Placeholder */
+.lesson-placeholder {
+  padding: var(--space-xl);
+  background: rgba(245,196,94,0.05);
+  border: 2px dashed var(--border-yellow-dim);
+  text-align: center;
+  margin: var(--space-xl) 0;
+  box-shadow: var(--shadow-pixel);
+}
+
+.lesson-placeholder__icon { font-size: 48px; margin-bottom: var(--space-md); display: block; opacity: 0.6; }
+
+.lesson-placeholder__text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.lesson-placeholder__subtext {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+/* Resources */
+.lesson-resources {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px dashed rgba(255,255,255,0.15);
+}
+
+.lesson-resources__title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--border-yellow);
+  margin-bottom: var(--space-md);
+}
+
+.resource-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border-red-dim);
+  color: var(--text-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all var(--transition-normal);
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.resource-link:hover {
+  background: var(--border-red-glow);
+  border-color: var(--border-red);
+  transform: translateX(4px);
+}
+
+/* Back Button */
+.lesson-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  margin-top: var(--space-xl);
+  background: rgba(0,0,0,0.4);
+  border: 2px solid var(--border-red);
+  color: var(--text-white);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-pixel);
+}
+
+.lesson-back:hover {
+  background: var(--border-red);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-pixel-hover);
+}
+
+@media (max-width: 768px) {
+  .lesson-content { padding: var(--space-lg) var(--space-md); }
+  .lesson-header__title { font-size: 1.4rem; }
+}

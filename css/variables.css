@@ -1,0 +1,76 @@
+/* ======================================
+   ECSC Design System — Variables
+   Inherited from CLB ECSC original website
+   ====================================== */
+
+:root {
+  /* ── Core Palette ── */
+  --bg-navy: #102e50;
+  --bg-navy-dark: #0b1f38;
+  --bg-navy-light: #163d6a;
+  --bg-navy-transparent: rgba(16, 46, 80, 0.95);
+
+  --border-yellow: #f5c45e;
+  --border-yellow-dim: rgba(245, 196, 94, 0.3);
+  --border-yellow-glow: rgba(245, 196, 94, 0.15);
+
+  --accent-orange: #e78b48;
+
+  --border-red: #be3d2a;
+  --border-red-dim: rgba(190, 61, 42, 0.3);
+  --border-red-glow: rgba(190, 61, 42, 0.15);
+
+  --text-white: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.6);
+  --text-muted: rgba(255, 255, 255, 0.35);
+
+  /* ── Node Status Colors ── */
+  --status-available: #f5c45e;
+  --status-locked: rgba(255, 255, 255, 0.15);
+  --status-completed: #4ecdc4;
+  --status-in-progress: #e78b48;
+
+  /* ── Blue Team / Red Team / General accents ── */
+  --accent-blue: #4ea8de;
+  --accent-blue-dim: rgba(78, 168, 222, 0.3);
+  --accent-red: #be3d2a;
+  --accent-purple: #9d4edd;
+  --accent-purple-dim: rgba(157, 78, 221, 0.3);
+
+  /* ── Typography ── */
+  --font-heading: 'Silkscreen', cursive;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ── Spacing ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+
+  /* ── Pixel Art Shadows ── */
+  --shadow-pixel: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  --shadow-pixel-lg: 6px 6px 0px rgba(0, 0, 0, 0.3);
+  --shadow-pixel-hover: 8px 8px 0px rgba(0, 0, 0, 0.4);
+  --shadow-glow-yellow: 0 0 20px rgba(245, 196, 94, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(190, 61, 42, 0.3);
+
+  /* ── Border ── */
+  --border-outer: clamp(4px, 0.6vw, 13px);
+  --border-radius-sm: 0px; /* pixel art = no radius */
+
+  /* ── Canvas ── */
+  --canvas-grid-dot: rgba(245, 196, 94, 0.15);
+  --canvas-grid-line: rgba(245, 196, 94, 0.08);
+
+  /* ── Transitions ── */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* ── Node Dimensions ── */
+  --node-width: 280px;
+  --node-min-height: 100px;
+  --node-padding: 16px 20px;
+}

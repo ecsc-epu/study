@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECSC — Learning Roadmap</title>
+    <meta name="description" content="Lộ trình học tập An Ninh Mạng — CLB ECSC EPU">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../assets/favicons/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Silkscreen:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/canvas.css">
+    <link rel="stylesheet" href="../../css/flowchart.css">
+</head>
+
+<body>
+    <div class="outer-border">
+        <!-- Mobile Blocker Overlay -->
+        <div id="mobile-blocker" class="mobile-blocker">
+            <div class="mobile-blocker__content">
+                <i class="fa-solid fa-terminal mobile-blocker__icon"></i>
+                <h2>NEED A BIGGER SCREEN</h2>
+                <p>Nền tảng ECSC Learning có giao diện tương tác phức tạp, cần không gian hiển thị rộng. Vui lòng truy cập bằng thiết bị có màn hình lớn hơn để tiếp tục.</p>
+            </div>
+        </div>
+
+        <div class="inner-border">
+
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <a href="../../index.html" class="top-bar__logo">
+                    <img src="../../assets/logo.svg" alt="ECSC Logo">
+                    <span class="top-bar__logo-text">
+                        <span class="red">E</span>CSC Learning
+                    </span>
+                </a>
+                <nav class="breadcrumb" id="breadcrumb">
+                    <a href="../../index.html" class="breadcrumb__item" style="text-decoration:none;">> Roadmap</a><span class="breadcrumb__sep">›</span><span class="breadcrumb__item breadcrumb__item--active">Intro to Red Team</span>
+                </nav>
+            </div>
+
+            <!-- Canvas Area -->
+            <div id="canvas-container" style="flex: 1;">
+                <div id="infinite-canvas">
+                    <!-- Grid -->
+                    <div class="grid-layer">
+                        <div class="major-grid" id="majorGrid"></div>
+                        <div class="dot-grid" id="dotGrid"></div>
+                    </div>
+
+                    <!-- Particles background -->
+                    <canvas id="bg-canvas"></canvas>
+
+                    <!-- Edges SVG -->
+                    <svg id="edges-svg">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M0,0 L6,3 L0,6" fill="var(--border-yellow)" />
+                            </marker>
+                        </defs>
+                    </svg>
+
+                    <!-- View Title (now part of the world) -->
+                    <div id="world-title-container"
+                        style="position: absolute; z-index: 20; transform-origin: top center;">
+                        <div class="view-title" id="viewTitle">Intro to Red Team</div>
+                    </div>
+
+                    <!-- Nodes -->
+                    <div id="nodes-container"></div>
+
+                    <!-- Help Toast -->
+                    <div class="help-toast" id="helpToast">
+                        Kéo để di chuyển · Cuộn để zoom · <kbd>0</kbd> reset
+                    </div>
+
+                    <!-- Minimap -->
+                    <div class="minimap" id="minimap">
+                        <div class="minimap-grid"></div>
+                        <div class="minimap-origin"></div>
+                        <div class="minimap-nodes"></div>
+                        <div class="minimap-viewport" id="minimapViewport"></div>
+                    </div>
+
+                    <!-- HUD -->
+                    <div class="hud" id="hud">
+                        <div class="hud-item">
+                            <span>X</span>
+                            <span class="hud-value" id="hudX">0</span>
+                        </div>
+                        <div class="hud-divider"></div>
+                        <div class="hud-item">
+                            <span>Y</span>
+                            <span class="hud-value" id="hudY">0</span>
+                        </div>
+                        <div class="hud-divider"></div>
+                        <div class="hud-item">
+                            <span>Zoom</span>
+                            <span class="hud-value" id="hudZoom">100%</span>
+                        </div>
+                        <div class="hud-divider"></div>
+                        <button class="hud-btn" id="resetBtn" title="Reset view">⌂ Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- JS (order matters: utils → canvas → flowchart → nav → particles → app) -->
+        <script>
+            // Injected by Static Site Generator
+            window.PAGE_DATA = {"id":"redteam","title":"Intro to Red Team","parentRoadmap":"roadmap","layout":"tree","bounds":{"minX":-2500,"minY":-2500,"maxX":2500,"maxY":2500},"nodes":[{"id":"red-web","label":"Web Exploitation","type":"course","x":-600,"y":-250,"status":"available","description":"Khai thác lỗ hổng Web"},{"id":"web-ex-01","label":"1. OWASP Top 10","type":"lesson","x":-450,"y":-100,"status":"available","description":"SQLi, XSS, CSRF..."},{"id":"red-network","label":"Network Penetration","type":"course","x":0,"y":-250,"status":"available","description":"Tấn công mạng & Wifi"},{"id":"net-ex-01","label":"1. Recon & Nmap","type":"lesson","x":150,"y":-100,"status":"available","description":"Quét và thu thập thông tin mạng"},{"id":"red-privesc","label":"Privilege Escalation","type":"course","x":600,"y":-250,"status":"available","description":"Leo thang đặc quyền hệ thống"},{"id":"priv-01","label":"1. Windows PrivEsc","type":"lesson","x":750,"y":-100,"status":"available","description":"Leo quyền trên hệ điều hành Windows"}],"edges":[{"from":"red-web","to":"web-ex-01","type":"tree"},{"from":"red-network","to":"net-ex-01","type":"tree"},{"from":"red-privesc","to":"priv-01","type":"tree"}]};
+            window.BASE_PATH = '../../';
+        </script>
+        <script src="../../js/utils.js"></script>
+        <script src="../../js/canvas.js"></script>
+        <script src="../../js/flowchart.js"></script>
+        <script src="../../js/navigation.js"></script>
+        <script src="../../js/particles.js"></script>
+        <script src="../../js/app.js"></script>
+</body>
+
+</html>

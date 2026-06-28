@@ -1,0 +1,85 @@
+{
+  "id": "redteam",
+  "title": "Intro to Red Team",
+  "parentRoadmap": "roadmap",
+  "layout": "tree",
+  "bounds": {
+    "minX": -2500,
+    "minY": -2500,
+    "maxX": 2500,
+    "maxY": 2500
+  },
+  "nodes": [
+    {
+      "id": "red-web",
+      "label": "Web Exploitation",
+      "type": "course",
+      "x": -600,
+      "y": -250,
+      "status": "available",
+      "description": "Khai thác lỗ hổng Web"
+    },
+    {
+      "id": "web-ex-01",
+      "label": "1. OWASP Top 10",
+      "type": "lesson",
+      "x": -450,
+      "y": -100,
+      "status": "available",
+      "description": "SQLi, XSS, CSRF..."
+    },
+    {
+      "id": "red-network",
+      "label": "Network Penetration",
+      "type": "course",
+      "x": 0,
+      "y": -250,
+      "status": "available",
+      "description": "Tấn công mạng & Wifi"
+    },
+    {
+      "id": "net-ex-01",
+      "label": "1. Recon & Nmap",
+      "type": "lesson",
+      "x": 150,
+      "y": -100,
+      "status": "available",
+      "description": "Quét và thu thập thông tin mạng"
+    },
+    {
+      "id": "red-privesc",
+      "label": "Privilege Escalation",
+      "type": "course",
+      "x": 600,
+      "y": -250,
+      "status": "available",
+      "description": "Leo thang đặc quyền hệ thống"
+    },
+    {
+      "id": "priv-01",
+      "label": "1. Windows PrivEsc",
+      "type": "lesson",
+      "x": 750,
+      "y": -100,
+      "status": "available",
+      "description": "Leo quyền trên hệ điều hành Windows"
+    }
+  ],
+  "edges": [
+    {
+      "from": "red-web",
+      "to": "web-ex-01",
+      "type": "tree"
+    },
+    {
+      "from": "red-network",
+      "to": "net-ex-01",
+      "type": "tree"
+    },
+    {
+      "from": "red-privesc",
+      "to": "priv-01",
+      "type": "tree"
+    }
+  ]
+}
