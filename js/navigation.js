@@ -51,7 +51,7 @@ class NavigationController {
   /** Set view title with glitch animation */
   _setViewTitle(title, courseId) {
     if (!this.viewTitleEl) return;
-    this.viewTitleEl.textContent = title;
+    this.viewTitleEl.innerHTML = title;
     
     // Remove previous modifiers
     this.viewTitleEl.classList.remove('view-title--beginner', 'view-title--blueteam', 'view-title--redteam', 'view-title--sub');
