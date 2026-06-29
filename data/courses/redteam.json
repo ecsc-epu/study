@@ -27,7 +27,7 @@
       "y": -100,
       "status": "available",
       "description": "SQLi, XSS, CSRF...",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     },
     {
       "id": "red-network",
@@ -46,7 +46,7 @@
       "y": -100,
       "status": "available",
       "description": "Quét và thu thập thông tin mạng",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     },
     {
       "id": "red-privesc",
@@ -65,7 +65,7 @@
       "y": -100,
       "status": "available",
       "description": "Leo quyền trên hệ điều hành Windows",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     }
   ],
   "edges": [

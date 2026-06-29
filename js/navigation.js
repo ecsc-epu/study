@@ -44,8 +44,7 @@ class NavigationController {
       // Note: In a real app you might want lesson.html?id=...
       const lessonPage = (window.BASE_PATH || "") + "lesson.html";
       const url = buildUrl(lessonPage, {
-        course: window.PAGE_DATA.id || "roadmap",
-        lesson: node.id,
+        file: node.lessonFile || "placeholder.js"
       });
       window.location.href = url;
     }

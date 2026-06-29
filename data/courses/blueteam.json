@@ -27,7 +27,7 @@
       "y": -100,
       "status": "available",
       "description": "Cơ chế hoạt động của SOC",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     },
     {
       "id": "soc-02",
@@ -37,7 +37,7 @@
       "y": 50,
       "status": "available",
       "description": "Splunk & Elastic Security",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     },
     {
       "id": "blue-ir",
@@ -56,7 +56,7 @@
       "y": -100,
       "status": "available",
       "description": "PICERL framework",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     },
     {
       "id": "blue-forensics",
@@ -75,7 +75,7 @@
       "y": -100,
       "status": "available",
       "description": "Phân tích file hệ thống",
-      "lessonFile": "placeholder.json"
+      "lessonFile": "placeholder.js"
     }
   ],
   "edges": [
