@@ -6,10 +6,16 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
   const params = getUrlParams();
-  const file = params.file || "placeholder.js";
+  const nodeId = params.id;
+  const navInfo = window.LESSON_NAV_MAP ? window.LESSON_NAV_MAP[nodeId] : null;
+
+  const file = navInfo ? navInfo.file : (params.file || "placeholder.js");
+  const courseId = navInfo ? navInfo.courseId : "";
+  const courseTitle = navInfo ? navInfo.courseTitle : "";
+  const lessonTitle = navInfo ? navInfo.title : "";
 
   // Render lesson content
-  await renderLesson(file);
+  await renderLesson(file, courseId, courseTitle, lessonTitle, navInfo);
 
   // Init particles
   const bgCanvas = document.getElementById("bg-canvas");
@@ -19,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-function renderBreadcrumb(lessonTitle) {
+function renderBreadcrumb(courseId, courseTitle, lessonTitle, defaultTitle) {
   const breadcrumb = document.getElementById("breadcrumb");
   if (!breadcrumb) return;
 
@@ -33,6 +39,21 @@ function renderBreadcrumb(lessonTitle) {
   });
   breadcrumb.appendChild(roadmapLink);
 
+  if (courseId && courseTitle && courseId !== "roadmap") {
+    // Separator
+    breadcrumb.appendChild(
+      createElement("span", { className: "breadcrumb__sep", textContent: "›" }),
+    );
+
+    // Course link
+    const courseLink = createElement("a", {
+      className: "breadcrumb__item",
+      href: `pages/courses/${courseId}.html`,
+      textContent: courseTitle,
+    });
+    breadcrumb.appendChild(courseLink);
+  }
+
   // Separator
   breadcrumb.appendChild(
     createElement("span", { className: "breadcrumb__sep", textContent: "›" }),
@@ -42,12 +63,12 @@ function renderBreadcrumb(lessonTitle) {
   breadcrumb.appendChild(
     createElement("span", {
       className: "breadcrumb__item breadcrumb__item--active",
-      textContent: lessonTitle,
+      textContent: lessonTitle || defaultTitle,
     }),
   );
 }
 
-async function renderLesson(file) {
+async function renderLesson(file, courseId, courseTitle, lessonTitle, navInfo) {
   const container = document.getElementById("lessonContent");
   if (!container) return;
 
@@ -65,7 +86,7 @@ async function renderLesson(file) {
   }
   
   // Render breadcrumb with actual lesson title
-  renderBreadcrumb(lessonData.title || "Lesson");
+  renderBreadcrumb(courseId, courseTitle, lessonTitle, lessonData.title || "Lesson");
 
   // Header
   const header = createElement("div", { className: "lesson-header" });
@@ -124,8 +145,8 @@ async function renderLesson(file) {
       }
 
       if (task.questions && task.questions.length > 0) {
-        const qSection = createElement("div", { className: "task-questions-section" });
-        qSection.appendChild(createElement("h4", { className: "task-questions-title", textContent: "Practice & Answer" }));
+        const qSection = createElement("div", { className: "task-questions" });
+        qSection.appendChild(createElement("h4", { className: "task-questions-title", textContent: "Luyện tập & Trả lời" }));
         
         task.questions.forEach(q => {
           const qBlock = createElement("div", { className: "question-block" });
@@ -133,7 +154,7 @@ async function renderLesson(file) {
           
           const inputGroup = createElement("div", { className: "question-input-group" });
           const input = createElement("input", { className: "question-input", type: "text", placeholder: "----" });
-          const btnSubmit = createElement("button", { className: "btn-check", textContent: "Check" });
+          const btnSubmit = createElement("button", { className: "btn-check", textContent: "Kiểm tra" });
           const btnHint = createElement("button", { className: "btn-hint", title: q.hint });
           btnHint.innerHTML = '<i class="fa-regular fa-lightbulb"></i>';
           
@@ -141,18 +162,18 @@ async function renderLesson(file) {
             if (input.value.trim().toLowerCase() === (q.answer || "").toLowerCase()) {
               input.classList.remove("is-invalid");
               input.classList.add("is-valid");
-              btnSubmit.textContent = "Correct!";
+              btnSubmit.textContent = "Chính xác!";
               btnSubmit.style.backgroundColor = "var(--status-available)";
               btnSubmit.style.color = "var(--bg-navy-dark)";
             } else {
               input.classList.remove("is-valid");
               input.classList.add("is-invalid");
-              btnSubmit.textContent = "Incorrect";
+              btnSubmit.textContent = "Sai rồi";
               btnSubmit.style.backgroundColor = "var(--status-locked)";
               btnSubmit.style.color = "white";
               
               setTimeout(() => {
-                btnSubmit.textContent = "Check";
+                btnSubmit.textContent = "Kiểm tra";
                 btnSubmit.style.backgroundColor = "";
                 btnSubmit.style.color = "";
               }, 2000);
@@ -204,20 +225,57 @@ async function renderLesson(file) {
     placeholder.appendChild(
       createElement("div", {
         className: "lesson-placeholder__subtext",
-        textContent: "This lesson will be updated soon. Check back later!",
+        textContent: "Bài học này sẽ sớm được cập nhật. Vui lòng quay lại sau!",
       }),
     );
     container.appendChild(placeholder);
   }
 
-  // Back button
-  container.appendChild(
-    createElement("button", {
-      className: "lesson-back",
-      innerHTML: '<i class="fa-solid fa-arrow-left"></i> Close Lesson',
-      onclick: () => window.history.back()
-    }),
-  );
+  // Footer / Navigation Buttons
+  const footerNav = createElement("div", { className: "post-navigation" });
+
+  // Left side: Prev Lesson (Older)
+  if (navInfo && navInfo.prev) {
+    const prevWrap = createElement("a", {
+      className: "nav-link nav-link--prev",
+      href: buildUrl("lesson.html", { id: navInfo.prev.id })
+    });
+    prevWrap.innerHTML = `
+      <span class="nav-label">BÀI TRƯỚC</span>
+      <span class="nav-title">${navInfo.prev.title}</span>
+    `;
+    footerNav.appendChild(prevWrap);
+  } else {
+    // If no prev, just show close lesson
+    const prevWrap = createElement("a", {
+      className: "nav-link nav-link--prev",
+      href: courseId ? `pages/courses/${courseId}.html` : "index.html"
+    });
+    prevWrap.innerHTML = `
+      <span class="nav-label">QUAY LẠI</span>
+      <span class="nav-title">Đóng bài học</span>
+    `;
+    footerNav.appendChild(prevWrap);
+  }
+
+  // Right side: Next Lesson (Newer)
+  if (navInfo && navInfo.next) {
+    const nextWrap = createElement("a", {
+      className: "nav-link nav-link--next",
+      href: buildUrl("lesson.html", { id: navInfo.next.id })
+    });
+    nextWrap.innerHTML = `
+      <span class="nav-label">BÀI TIẾP THEO</span>
+      <span class="nav-title">${navInfo.next.title}</span>
+    `;
+    footerNav.appendChild(nextWrap);
+  } else {
+    // Empty spacer if no next
+    const spacer = createElement("div", { className: "nav-link nav-link--empty" });
+    footerNav.appendChild(spacer);
+  }
+
+  container.appendChild(footerNav);
 }
 
 function showError(message) {
@@ -242,7 +300,7 @@ function showError(message) {
     createElement("a", {
       className: "lesson-back",
       href: "index.html",
-      innerHTML: '<i class="fa-solid fa-arrow-left"></i> Back to Roadmap',
+      innerHTML: '<i class="fa-solid fa-arrow-left"></i> Quay lại lộ trình',
       style: "margin-top: 24px;",
     }),
   );

@@ -154,3 +154,34 @@ Object.values(courseMap).forEach(course => {
 });
 
 console.log('Conversion done. Multi-Page Architecture built successfully.');
+
+// Build lesson navigation map
+const lessonNavMap = {};
+jsonFiles.forEach((f) => {
+  if (f === path.normalize("data/roadmap.json")) return;
+  try {
+    const data = JSON.parse(fs.readFileSync(f, "utf8"));
+    const courseId = path.basename(f, ".json");
+    if (!data.nodes) return;
+    
+    const lessons = data.nodes.filter(n => n.type === 'lesson');
+    
+    lessons.forEach((l, index) => {
+      const nextNode = lessons[index + 1] || null;
+      const prevNode = lessons[index - 1] || null;
+      
+      lessonNavMap[l.id] = {
+        courseId: courseId,
+        courseTitle: data.title,
+        title: l.label,
+        file: l.lessonFile || "placeholder.js",
+        next: nextNode ? { id: nextNode.id, title: nextNode.label, file: nextNode.lessonFile || "placeholder.js" } : null,
+        prev: prevNode ? { id: prevNode.id, title: prevNode.label, file: prevNode.lessonFile || "placeholder.js" } : null
+      };
+    });
+  } catch (err) {
+    console.error(`Error building nav map for ${f}:`, err);
+  }
+});
+fs.writeFileSync("data/lesson-nav-map.js", "window.LESSON_NAV_MAP = " + JSON.stringify(lessonNavMap, null, 2) + ";");
+console.log("Generated data/lesson-nav-map.js");

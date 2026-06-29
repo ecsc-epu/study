@@ -41,10 +41,9 @@ class NavigationController {
       window.location.href = node.targetHtml;
     } else if (node.type === "lesson") {
       // Navigate to lesson page
-      // Note: In a real app you might want lesson.html?id=...
       const lessonPage = (window.BASE_PATH || "") + "lesson.html";
       const url = buildUrl(lessonPage, {
-        file: node.lessonFile || "placeholder.js"
+        id: node.id
       });
       window.location.href = url;
     }
