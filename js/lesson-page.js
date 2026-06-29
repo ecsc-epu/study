@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   // Render lesson content
-  renderLesson(lesson, courseData);
+  await renderLesson(lesson, courseData);
 
   // Init particles
   const bgCanvas = document.getElementById("bg-canvas");
@@ -105,11 +105,11 @@ function renderBreadcrumb(courseId, courseTitle, lessonTitle) {
   );
 }
 
-function renderLesson(lesson, courseData) {
+async function renderLesson(lesson, courseData) {
   const container = document.getElementById("lessonContent");
   if (!container) return;
 
-  const content = lesson.content || {};
+  container.innerHTML = ""; // Clear existing
 
   // Header
   const header = createElement("div", { className: "lesson-header" });
@@ -130,7 +130,7 @@ function renderLesson(lesson, courseData) {
   header.appendChild(
     createElement("h1", {
       className: "lesson-header__title",
-      textContent: content.title || lesson.label,
+      textContent: lesson.label,
     }),
   );
 
@@ -143,14 +143,168 @@ function renderLesson(lesson, courseData) {
 
   container.appendChild(header);
 
+  // Load external lesson data if specified
+  let lessonData = null;
+  if (lesson.lessonFile) {
+    try {
+      const response = await fetch(`data/lessons/${lesson.lessonFile}`);
+      if (!response.ok) throw new Error("Network response was not ok");
+      lessonData = await response.json();
+    } catch (error) {
+      console.error("Error loading lesson file:", error);
+      showError(
+        "Không thể tải nội dung bài học. Vui lòng chạy trên HTTP Server hoặc kiểm tra kết nối.",
+      );
+      return;
+    }
+  }
+
   // Body
-  if (
-    content.body &&
-    content.body !== "Nội dung bài giảng sẽ được cập nhật sau."
-  ) {
-    const body = createElement("div", { className: "lesson-body" });
-    body.innerHTML = content.body;
-    container.appendChild(body);
+  if (lessonData && lessonData.tasks && lessonData.tasks.length > 0) {
+    const tasksContainer = createElement("div", { className: "lesson-tasks" });
+
+    lessonData.tasks.forEach((task, index) => {
+      const taskEl = createElement("div", {
+        className: `task-block task-block--${task.status}`,
+      });
+
+      // Task Header
+      const taskHeader = createElement("div", { className: "task-header" });
+      taskHeader.onclick = () => {
+        taskEl.classList.toggle("task-block--expanded");
+      };
+
+      const taskTitleWrap = createElement("div", {
+        className: "task-title-wrap",
+      });
+      const statusIconMap = {
+        completed: "fa-solid fa-circle-check",
+        active: "fa-regular fa-circle",
+        locked: "fa-solid fa-lock",
+      };
+
+      taskTitleWrap.appendChild(
+        createElement("i", {
+          className: `task-status-icon ${statusIconMap[task.status]}`,
+        }),
+      );
+      taskTitleWrap.appendChild(
+        createElement("span", {
+          className: "task-title",
+          textContent: `Task ${index + 1} `,
+        }),
+      );
+      taskTitleWrap.appendChild(
+        createElement("span", {
+          className: "task-subtitle",
+          textContent: task.title,
+        }),
+      );
+      taskHeader.appendChild(taskTitleWrap);
+
+      const toggleIcon = createElement("i", {
+        className: "fa-solid fa-chevron-down task-toggle-icon",
+      });
+      taskHeader.appendChild(toggleIcon);
+
+      taskEl.appendChild(taskHeader);
+
+      // Task Body
+      const taskBody = createElement("div", { className: "task-body" });
+
+      if (task.content) {
+        const contentEl = createElement("div", { className: "task-content" });
+        contentEl.innerHTML = task.content;
+        taskBody.appendChild(contentEl);
+      }
+
+      if (task.questions && task.questions.length > 0) {
+        const qSection = createElement("div", {
+          className: "task-questions-section",
+        });
+        qSection.appendChild(
+          createElement("h4", {
+            className: "task-questions-title",
+            textContent: "Answer the questions below",
+          }),
+        );
+
+        task.questions.forEach((q) => {
+          const qBlock = createElement("div", { className: "question-block" });
+          qBlock.appendChild(
+            createElement("p", {
+              className: "question-text",
+              textContent: q.text,
+            }),
+          );
+
+          const inputGroup = createElement("div", {
+            className: "question-input-group",
+          });
+          const input = createElement("input", {
+            className: "question-input",
+            type: "text",
+            placeholder: "----",
+          });
+          const btnSubmit = createElement("button", {
+            className: "btn-check",
+            textContent: "Check",
+          });
+          const btnHint = createElement("button", {
+            className: "btn-hint",
+            title: q.hint,
+          });
+          btnHint.innerHTML = '<i class="fa-regular fa-lightbulb"></i>';
+
+          btnSubmit.onclick = () => {
+            if (
+              input.value.trim().toLowerCase() ===
+              (q.answer || "").toLowerCase()
+            ) {
+              input.classList.remove("is-invalid");
+              input.classList.add("is-valid");
+              btnSubmit.textContent = "Correct!";
+              btnSubmit.style.backgroundColor = "var(--status-available)";
+              btnSubmit.style.color = "var(--bg-navy-dark)";
+            } else {
+              input.classList.remove("is-valid");
+              input.classList.add("is-invalid");
+              btnSubmit.textContent = "Incorrect";
+              btnSubmit.style.backgroundColor = "var(--status-locked)";
+              btnSubmit.style.color = "white";
+
+              setTimeout(() => {
+                btnSubmit.textContent = "Check";
+                btnSubmit.style.backgroundColor = "";
+                btnSubmit.style.color = "";
+              }, 2000);
+            }
+          };
+
+          btnHint.onclick = () => {
+            alert("Hint: " + q.hint);
+          };
+
+          inputGroup.appendChild(input);
+          inputGroup.appendChild(btnSubmit);
+          inputGroup.appendChild(btnHint);
+          qBlock.appendChild(inputGroup);
+
+          qSection.appendChild(qBlock);
+        });
+        taskBody.appendChild(qSection);
+      }
+
+      taskEl.appendChild(taskBody);
+      tasksContainer.appendChild(taskEl);
+
+      // Open active tasks by default
+      if (task.status === "active") {
+        taskEl.classList.add("task-block--expanded");
+      }
+    });
+
+    container.appendChild(tasksContainer);
   } else {
     // Placeholder
     const placeholder = createElement("div", {
@@ -175,36 +329,6 @@ function renderLesson(lesson, courseData) {
       }),
     );
     container.appendChild(placeholder);
-  }
-
-  // Resources
-  if (content.resources && content.resources.length > 0) {
-    const resources = createElement("div", { className: "lesson-resources" });
-    resources.appendChild(
-      createElement("h3", {
-        className: "lesson-resources__title",
-        textContent: "> Tài liệu tham khảo",
-      }),
-    );
-
-    content.resources.forEach((res) => {
-      const link = createElement("a", {
-        className: "resource-link",
-        href: res.url,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      });
-      link.appendChild(
-        createElement("span", {
-          className: "resource-link__icon",
-          textContent: "📎",
-        }),
-      );
-      link.appendChild(document.createTextNode(res.label));
-      resources.appendChild(link);
-    });
-
-    container.appendChild(resources);
   }
 
   // Back button

@@ -26,7 +26,8 @@
       "x": -450,
       "y": -100,
       "status": "available",
-      "description": "SQLi, XSS, CSRF..."
+      "description": "SQLi, XSS, CSRF...",
+      "lessonFile": "placeholder.json"
     },
     {
       "id": "red-network",
@@ -44,7 +45,8 @@
       "x": 150,
       "y": -100,
       "status": "available",
-      "description": "Quét và thu thập thông tin mạng"
+      "description": "Quét và thu thập thông tin mạng",
+      "lessonFile": "placeholder.json"
     },
     {
       "id": "red-privesc",
@@ -62,7 +64,8 @@
       "x": 750,
       "y": -100,
       "status": "available",
-      "description": "Leo quyền trên hệ điều hành Windows"
+      "description": "Leo quyền trên hệ điều hành Windows",
+      "lessonFile": "placeholder.json"
     }
   ],
   "edges": [

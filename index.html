@@ -65,11 +65,7 @@
               <span class="red">E</span>CSC
             </span>
           </a>
-          <nav class="breadcrumb" id="breadcrumb">
-            <span class="breadcrumb__item breadcrumb__item--active"
-              >&gt; Roadmap</span
-            >
-          </nav>
+          <nav class="breadcrumb" id="breadcrumb"><span class="breadcrumb__item breadcrumb__item--active">&gt; Roadmap</span></nav>
         </div>
 
         <!-- Canvas Area -->
@@ -109,9 +105,7 @@
                 transform-origin: top center;
               "
             >
-              <div class="view-title" id="viewTitle">
-                <span class="red-text">E</span>CSC Roadmap
-              </div>
+              <div class="view-title" id="viewTitle"><span class="red-text">E</span>CSC Roadmap</div>
             </div>
 
             <!-- Nodes -->
@@ -159,86 +153,8 @@
     <!-- JS (order matters: utils → canvas → flowchart → nav → particles → app) -->
     <script>
       // Injected by Static Site Generator
-      window.PAGE_DATA = {
-        title: '<span class="red-text">E</span>CSC Roadmap',
-        titleY: -310,
-        bounds: { minX: -1500, minY: -1500, maxX: 1500, maxY: 1500 },
-        decors: [
-          {
-            src: "assets/decors/wrench.svg",
-            x: -650,
-            y: 400,
-            rotation: -30,
-            height: "600px",
-            opacity: 0.3,
-          },
-          {
-            src: "assets/decors/hammer.svg",
-            x: 650,
-            y: 400,
-            rotation: 30,
-            height: "600px",
-            opacity: 0.3,
-          },
-          {
-            src: "assets/decors/screwdriver.svg",
-            x: -700,
-            y: -250,
-            rotation: 45,
-            height: "600px",
-            opacity: 0.3,
-          },
-          {
-            src: "assets/decors/brush.svg",
-            x: 700,
-            y: -250,
-            rotation: -45,
-            height: "600px",
-            opacity: 0.3,
-          },
-        ],
-        nodes: [
-          {
-            id: "beginner",
-            label: "Beginner",
-            description: "Kiến thức nền tảng cho người mới bắt đầu",
-            x: 0,
-            y: -120,
-            color: "#f5c45e",
-            status: "available",
-            targetHtml: "./pages/courses/beginner.html",
-          },
-          {
-            id: "blueteam",
-            label: "Intro to Blue Team",
-            faIcon: "fa-solid fa-shield-halved",
-            description: "Phòng thủ, giám sát & ứng cứu sự cố",
-            x: -280,
-            y: 120,
-            color: "#4ea8de",
-            status: "available",
-            prerequisites: ["beginner"],
-            targetHtml: "./pages/courses/blueteam.html",
-          },
-          {
-            id: "redteam",
-            label: "Intro to Red Team",
-            faIcon: "fa-solid fa-user-ninja",
-            description: "Kiểm thử xâm nhập & khai thác lỗ hổng",
-            x: 280,
-            y: 120,
-            color: "#be3d2a",
-            status: "available",
-            prerequisites: ["beginner"],
-            targetHtml: "./pages/courses/redteam.html",
-          },
-        ],
-        edges: [
-          { from: "beginner", to: "blueteam" },
-          { from: "beginner", to: "redteam" },
-        ],
-      };
-      window.BASE_PATH = "./";
+      window.PAGE_DATA = {"title":"<span class=\"red-text\">E</span>CSC Roadmap","titleY":-310,"bounds":{"minX":-1500,"minY":-1500,"maxX":1500,"maxY":1500},"decors":[{"src":"assets/decors/wrench.svg","x":-650,"y":400,"rotation":-30,"height":"600px","opacity":0.3},{"src":"assets/decors/hammer.svg","x":650,"y":400,"rotation":30,"height":"600px","opacity":0.3},{"src":"assets/decors/screwdriver.svg","x":-700,"y":-250,"rotation":45,"height":"600px","opacity":0.3},{"src":"assets/decors/brush.svg","x":700,"y":-250,"rotation":-45,"height":"600px","opacity":0.3}],"nodes":[{"id":"beginner","label":"Beginner","description":"Kiến thức nền tảng cho người mới bắt đầu","x":0,"y":-120,"color":"#f5c45e","status":"available","targetHtml":"./pages/courses/beginner.html"},{"id":"blueteam","label":"Intro to Blue Team","faIcon":"fa-solid fa-shield-halved","description":"Phòng thủ, giám sát & ứng cứu sự cố","x":-280,"y":120,"color":"#4ea8de","status":"available","prerequisites":["beginner"],"targetHtml":"./pages/courses/blueteam.html"},{"id":"redteam","label":"Intro to Red Team","faIcon":"fa-solid fa-user-ninja","description":"Kiểm thử xâm nhập & khai thác lỗ hổng","x":280,"y":120,"color":"#be3d2a","status":"available","prerequisites":["beginner"],"targetHtml":"./pages/courses/redteam.html"}],"edges":[{"from":"beginner","to":"blueteam"},{"from":"beginner","to":"redteam"}]};
+      window.BASE_PATH = './';
     </script>
     <script src="./js/transition.js"></script>
     <script src="./js/utils.js"></script>

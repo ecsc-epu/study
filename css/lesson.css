@@ -219,3 +219,220 @@ body {
     font-size: 1.4rem;
   }
 }
+
+/* ── TryHackMe Style Tasks ── */
+.lesson-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  margin-bottom: 40px;
+}
+
+.task-block {
+  background: var(--bg-navy-dark);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.task-header:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.task-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-status-icon {
+  font-size: 1.1rem;
+}
+
+.task-block--completed .task-status-icon {
+  color: var(--status-available);
+}
+
+.task-block--active .task-status-icon {
+  color: var(--border-yellow);
+}
+
+.task-block--locked .task-status-icon {
+  color: var(--text-dim);
+}
+
+.task-title {
+  color: var(--status-available);
+  font-weight: bold;
+  font-family: var(--font-mono);
+}
+
+.task-subtitle {
+  color: var(--text-white);
+  font-weight: 500;
+}
+
+.task-block--active .task-title {
+  color: var(--border-yellow);
+}
+
+.task-block--locked .task-title {
+  color: var(--text-dim);
+}
+
+.task-toggle-icon {
+  color: var(--text-dim);
+  transition: transform 0.3s ease;
+}
+
+.task-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    padding 0.3s ease;
+  background: #ffffff;
+  color: #333333;
+}
+
+.task-block--expanded .task-body {
+  max-height: 2000px;
+  opacity: 1;
+  padding: 24px;
+}
+
+.task-block--expanded .task-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.task-content {
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.task-content p {
+  margin-bottom: 12px;
+}
+
+.btn-view-site {
+  background-color: #a4e135;
+  color: #1a1a1a;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  font-family: var(--font-mono);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-view-site:hover {
+  background-color: #92c92e;
+}
+
+.task-questions-section {
+  border-top: 1px solid #eeeeee;
+  padding-top: 20px;
+}
+
+.task-questions-title {
+  color: #ff3366;
+  font-weight: 500;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.question-block {
+  margin-bottom: 24px;
+}
+
+.question-text {
+  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.question-input-group {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.question-input {
+  flex-grow: 1;
+  padding: 10px 16px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #333;
+  font-family: var(--font-mono);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.question-input:focus {
+  border-color: var(--border-yellow);
+}
+
+.question-input.is-invalid {
+  border-color: var(--status-locked);
+  background: #fff0f0;
+}
+
+.question-input.is-valid {
+  border-color: var(--status-available);
+  background: #f0fff0;
+}
+
+.btn-check {
+  background: #ffffff;
+  border: 1px solid #a4e135;
+  color: #333;
+  padding: 0 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.btn-check:hover {
+  background: #f8ffeb;
+}
+
+.btn-hint {
+  background: #ffffff;
+  border: 1px solid #ffaa00;
+  color: #ffaa00;
+  width: 42px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-hint:hover {
+  background: #fff8eb;
+}

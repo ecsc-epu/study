@@ -15,7 +15,7 @@ function walkSync(dir, filelist = []) {
 }
 
 const allFiles = walkSync('data');
-const jsonFiles = allFiles.filter(f => f.endsWith('.json'));
+const jsonFiles = allFiles.filter(f => f.endsWith('.json') && !f.includes(path.normalize('data/lessons/')));
 
 // Load template
 const templateHtml = fs.readFileSync('template.html', 'utf8');

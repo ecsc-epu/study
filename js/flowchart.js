@@ -184,7 +184,7 @@ class FlowchartRenderer {
         this.collapsedStates[node.id] = !this.collapsedStates[node.id];
         el.setAttribute("data-collapsed", this.collapsedStates[node.id]);
         this._updatePositions();
-        
+
         setTimeout(() => {
           this.nodesContainer.classList.remove("is-animating-layout");
         }, 450);

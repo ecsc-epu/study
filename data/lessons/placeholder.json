@@ -1,0 +1,49 @@
+{
+  "id": "placeholder-lesson",
+  "title": "Welcome to ECSC Lab",
+  "description": "This is a placeholder lesson demonstrating the new interactive task format.",
+  "tasks": [
+    {
+      "id": "task-1",
+      "title": "Think like a Hacker!",
+      "status": "completed",
+      "content": "<p>Understanding the mindset of an attacker is the first step to defending a system.</p>",
+      "questions": []
+    },
+    {
+      "id": "task-2",
+      "title": "Starting the Lab",
+      "status": "active",
+      "content": "<p>This room uses a virtual desktop to simulate a real system. Press the \"View Site\" button below to get started.</p><button class=\"btn-view-site\" onclick=\"alert('Khởi chạy Lab thành công!')\">🖥️ View Site</button><p>A fake banking application called FakeBank will launch. When the lab loads, you'll see the banking application running in your browser.</p>",
+      "questions": [
+        {
+          "id": "q1",
+          "text": "What is the bank account number shown in the FakeBank application?",
+          "hint": "Look at the top right corner of the FakeBank site.",
+          "answer": "123456"
+        }
+      ]
+    },
+    {
+      "id": "task-3",
+      "title": "Find Hidden Pages",
+      "status": "locked",
+      "content": "<p>Use directory enumeration tools like GoBuster or DirBuster to find hidden pages.</p>",
+      "questions": [
+        {
+          "id": "q2",
+          "text": "What is the hidden page?",
+          "hint": "Try common words for hidden directories.",
+          "answer": "/admin"
+        }
+      ]
+    },
+    {
+      "id": "task-4",
+      "title": "Attack the Admin Page",
+      "status": "locked",
+      "content": "<p>Bypass the login to access the admin panel.</p>",
+      "questions": []
+    }
+  ]
+}
